@@ -2,18 +2,21 @@
 shop_name = "BEST DELIVERY AND SHOP PIZZA 228 BEST 1337"
 
 available_topings = {
-    "кетчуп": [132, 10],  # "Ключ":[Кількість в нявності, ціна]
+    "кетчуп": [0, 10],  # "Ключ":[Кількість в нявності, ціна]
     "курка": [132, 15],
     "сир": [87, 12],
     "Ковбаса": [144, 12],
     "Майонез": [121, 10],
     "Ананас": [111, 14],
-    "Маринована_Цибуля": [156, 8],
+    "Маринована Цибуля": [156, 8],
     "Гриби": [138, 13]
     }
 
 # Пустий список
 client_topings = []
+
+# Максимум наповнювачів у замовленні
+max_topings_count = 5
 
 # Виводить назву магазину в термінал
 print(shop_name)
@@ -30,16 +33,20 @@ for key, value in available_topings.items():
     print("-----")
 
 print()
-print('Оберіть 5 наповнювачів. Зайві позначте знаком "-".')
-
-# Цикл, виконує вкладені рядки визначену(5) кількість разів
-for _ in range(5):
-    toping = input("Оберіть наповнювач: ")
-    # Додає елемент до списку
-    client_topings.append(toping)
-
+print(f'Оберіть {max_topings_count} наповнювачів. Коли завершите, поставте "-" ')
 topings_list = "Ви вибрали наступні наповнювачі: \n"
-for toping in client_topings:
-    topings_list += toping + ", "
+# Цикл, виконує вкладені рядки визначену кількість разів
+for _ in range(max_topings_count):
+    input_toping = input("Наповнювач: ")
+    input_toping.title()
+
+    for toping, num_in_storage in available_topings.items():
+        toping.title()
+        if input_toping == toping and num_in_storage[0] > 0:
+            # Додає елемент до списку
+            client_topings.append(toping)
+            topings_list += toping + ", "
+        elif num_in_storage <= 0:
+            
 
 print(topings_list)
