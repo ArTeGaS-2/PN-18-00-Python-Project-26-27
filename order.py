@@ -30,5 +30,17 @@ class Order:
             print("-----")
 
     def client_topings_choice(self):
+        def client_input():
+            toping = input("Наповнювач: ")
+            for key, value in self.available_topings.items():
+                if (toping.lower() == key.lower()) and (value[0] > 0):
+                    self.choosed_topings += f"{key}, "
+                    self.client_topings.append(key)
+                
         print(f'Оберіть {self.max_topings_count} наповнювачів. Коли завершите, поставте "-" ')
         self.choosed_topings = "Ви вибрали наступні наповнювачі: \n"
+
+        for _ in range(self.max_topings_count):
+            client_input()
+
+        print(self.choosed_topings)
