@@ -31,16 +31,32 @@ class Order:
 
     def client_topings_choice(self):
         def client_input():
+            is_continued = True
+
             toping = input("Наповнювач: ")
+            toping = toping.title()
+
             for key, value in self.available_topings.items():
+                key = key.title()
+                is_continued = is_continued
+                
                 if (toping.lower() == key.lower()) and (value[0] > 0):
                     self.choosed_topings += f"{key}, "
                     self.client_topings.append(key)
-                
+                elif toping == "-":
+                    is_continued = False
+                    break
+            if is_continued != True:
+                return False
+            else:
+                return True
+
+        toping_count_flag = True
+
         print(f'Оберіть {self.max_topings_count} наповнювачів. Коли завершите, поставте "-" ')
         self.choosed_topings = "Ви вибрали наступні наповнювачі: \n"
 
-        for _ in range(self.max_topings_count):
-            client_input()
+        while toping_count_flag and (len(self.client_topings) <= self.max_topings_count):
+            toping_count_flag = client_input()
 
         print(self.choosed_topings)
